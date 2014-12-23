@@ -9,15 +9,14 @@ from setuptools import setup, find_packages
 import ElasticSearchLib
 
 def main():
-	setup(name = 'robotframework-elasticsearch',
+	setup(
+		name = 'robotframework-elasticsearch',
 		version = ElasticSearchLib.__version__,
 		description = 'ElasticSearch library for Robot Framework',
 		author = 'PagesJaunes',
 		author_email = 'fdepaulis@pagesjaunes.fr',
 		url = 'https://github.com/pagesjaunes/robotframework-elasticsearch',
-		# package_dir = { '' : 'src'},
 		packages=find_packages(),
-		# packages = ['ElasticSearchLib'],
 		install_requires = ['robotframework','elasticsearch']
 	)
 
