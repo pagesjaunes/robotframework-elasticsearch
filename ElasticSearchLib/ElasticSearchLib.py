@@ -18,7 +18,7 @@ class ElasticSearchLib(object):
     This library has several keywords : es search, es count, es delete index, es create index.
     """
 
-    ROBOT_LIBRARY_VERSION = '1.0'
+    ROBOT_LIBRARY_VERSION = '1.1'
 
     def es_search(self,p_host,p_port,p_index,p_query):
         """
@@ -124,3 +124,29 @@ class ElasticSearchLib(object):
 
         except Exception:
             raise AssertionError("Can't create the index %s on %s:%i",p_index,p_host,int(p_port))
+
+    def es_index(self,p_host,p_port,p_index,p_doctype,p_docid,p_document):
+        """
+        Indexes a document on an elasticsearch index according to a doctype and a docid
+
+        {p_host}   Elasticsearch server\n
+        {p_port}   Port of the es server\n
+        {p_index}  Name of the index to query\n
+        {p_doctype}  type of the document to index\n
+        {p_docid}     Id of the document to index\n
+        {p_document}  Document to index\n
+
+        | es index | localhost | 9200 | myIndex | theDocType | id_457891 | {"adress":{"street":"myAdress", "city":"Wow city"}} |
+        """
+        
+        # Es client
+        try:
+            param = [{'host':p_host,'port':int(p_port)}]
+            es = Elasticsearch(param)
+        except Exception:
+            raise AssertionError("Connexion error on %s:%i",p_host,int(p_port))
+
+        try:
+            es.index(doc_type=p_doctype, id=p_docid, body=p_document, index=p_index)
+        except Exception:
+            raise AssertionError("Index error on %s:%i/%s for document : %s",p_host,int(p_port),p_index,p_document)
